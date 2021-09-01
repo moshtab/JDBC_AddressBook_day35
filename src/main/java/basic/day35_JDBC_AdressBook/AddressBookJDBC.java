@@ -14,6 +14,7 @@ public class AddressBookJDBC {
 		readAdressbook();
 		updateContactNameOfAdressbook();
 		showContactsBetweenGivenDates();
+		countContactsByCity();
 	}
 
 	private static Connection getSqlConnection() {
@@ -127,6 +128,39 @@ public class AddressBookJDBC {
 					String name = resultSet.getString(1);
 
 					String row = String.format("User record: \n Name: %s", name);
+					System.out.println(row);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException sqlException) {
+					System.out.println(sqlException.getMessage());
+
+				}
+			}
+		}
+
+	}
+
+	private static void countContactsByCity() {
+		System.out.println("Counting number of contact by city");
+		Connection conn = getSqlConnection();
+
+		try {
+			if (conn != null) {
+				String readEmpPayroll = "SELECT count(lastName) FROM adressbook WHERE city = 'Metpally' or state ='Telangana'";
+
+				Statement statement = conn.createStatement();
+				ResultSet resultSet = statement.executeQuery(readEmpPayroll);
+				while (resultSet.next()) {
+
+					int countContacts = resultSet.getInt(1);
+
+					String row = String.format("User record: \n Number of Contacts: %d", countContacts);
 					System.out.println(row);
 				}
 			}
