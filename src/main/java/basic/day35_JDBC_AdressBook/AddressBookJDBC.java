@@ -15,6 +15,7 @@ public class AddressBookJDBC {
 		updateContactNameOfAdressbook();
 		showContactsBetweenGivenDates();
 		countContactsByCity();
+		insertContact();
 	}
 
 	private static Connection getSqlConnection() {
@@ -173,6 +174,44 @@ public class AddressBookJDBC {
 				} catch (SQLException sqlException) {
 					System.out.println(sqlException.getMessage());
 
+				}
+			}
+		}
+
+	}
+
+	private static void insertContact() {
+		System.out.println("Inserting a new contact to adressbook table");
+		Connection conn = getSqlConnection();
+		if (conn != null) {
+			String insertEmp = "INSERT INTO adressbook (firstName,lastName,address,city,state,zip,phoneNumber,email,joinedDate) values(?,?,?,?,?,?,?,?,?)";
+			try {
+				PreparedStatement preparedStatement = conn.prepareStatement(insertEmp);
+				preparedStatement.setString(1, "Md");
+				preparedStatement.setString(2, "Sofyan");
+				preparedStatement.setString(3, "banjarahills");
+				preparedStatement.setString(4, "Hyderabad");
+				preparedStatement.setString(5, "Kerala");
+				preparedStatement.setInt(6, 505327);
+				preparedStatement.setString(7, "8639619379");
+				preparedStatement.setString(8, "mdsof@gmail.com");
+				preparedStatement.setString(9, "2021-10-01");
+
+				int rowUpdated = preparedStatement.executeUpdate();
+				if (rowUpdated > 0) {
+					System.out.println("Data is Updated");
+				}
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			} finally {
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException sqlException) {
+						System.out.println(sqlException.getMessage());
+
+					}
 				}
 			}
 		}
