@@ -13,6 +13,7 @@ public class AddressBookJDBC {
 		connectionEshtablished();
 		readAdressbook();
 		updateContactNameOfAdressbook();
+		showContactsBetweenGivenDates();
 	}
 
 	private static Connection getSqlConnection() {
@@ -105,6 +106,39 @@ public class AddressBookJDBC {
 						System.out.println(sqlException.getMessage());
 
 					}
+				}
+			}
+		}
+
+	}
+
+	private static void showContactsBetweenGivenDates() {
+		System.out.println("Displaying contacts added between given dates");
+		Connection conn = getSqlConnection();
+
+		try {
+			if (conn != null) {
+				String readEmpPayroll = "SELECT lastName FROM adressbook WHERE joinedDate between '2021-08-01' and '2021-09-08'";
+
+				Statement statement = conn.createStatement();
+				ResultSet resultSet = statement.executeQuery(readEmpPayroll);
+				while (resultSet.next()) {
+
+					String name = resultSet.getString(1);
+
+					String row = String.format("User record: \n Name: %s", name);
+					System.out.println(row);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException sqlException) {
+					System.out.println(sqlException.getMessage());
+
 				}
 			}
 		}
