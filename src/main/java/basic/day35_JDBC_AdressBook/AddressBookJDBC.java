@@ -2,6 +2,7 @@ package basic.day35_JDBC_AdressBook;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +12,7 @@ public class AddressBookJDBC {
 	public static void main(String[] args) {
 		connectionEshtablished();
 		readAdressbook();
+		updateContactNameOfAdressbook();
 	}
 
 	private static Connection getSqlConnection() {
@@ -60,7 +62,8 @@ public class AddressBookJDBC {
 					String brothers = resultSet.getString(12);
 					String row = String.format(
 							"User record:\n FirstName: %s,\n LastName: %s, \n Address: %s,  \n City: %s,\n State: %s , \n Zip: %d, \n PhoneNumber: %s, \n email:%s,\n Family:%s,\n Friends:%s,\n Professions:%s,\n Brothers:%s,",
-							firstName, lastName, adress, city, state, zip, phoneNumber, email, family,friends,professions,brothers);
+							firstName, lastName, adress, city, state, zip, phoneNumber, email, family, friends,
+							professions, brothers);
 					System.out.println(row);
 				}
 			}
@@ -73,6 +76,35 @@ public class AddressBookJDBC {
 				} catch (SQLException sqlException) {
 					System.out.println(sqlException.getMessage());
 
+				}
+			}
+		}
+
+	}
+
+	private static void updateContactNameOfAdressbook() {
+		System.out.println("Updating address of Sumer ");
+		Connection conn = getSqlConnection();
+		if (conn != null) {
+			String updateEmpPayroll = "UPDATE adressbook SET address = ? WHERE lastName ='Sumer'";
+			try {
+				PreparedStatement preparedStatement = conn.prepareStatement(updateEmpPayroll);
+				preparedStatement.setString(1, "Redhills");
+				int rowUpdated = preparedStatement.executeUpdate();
+				if (rowUpdated > 0) {
+					System.out.println("Data is Updated");
+				}
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			} finally {
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException sqlException) {
+						System.out.println(sqlException.getMessage());
+
+					}
 				}
 			}
 		}
