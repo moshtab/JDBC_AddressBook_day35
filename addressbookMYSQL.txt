@@ -1,0 +1,211 @@
+//uc1
+mysql> CREATE DATABASE Adress_Book_Service;
+Query OK, 1 row affected (0.17 sec)
+
+mysql> SHOW DATABASES;
++---------------------+
+| Database            |
++---------------------+
+| adress_book_service |
+| information_schema  |
+| mysql               |
+| payroll_service     |
+| performance_schema  |
+| sakila              |
+| sys                 |
+| world               |
++---------------------+
+8 rows in set (0.04 sec)
+
+mysql> USE adress_book_service;
+Database changed
+mysql>
+
+//uc2
+mysql> CREATE TABLE adressbook(firstName varchar(20),lastName varchar(20),address varchar(20),city varchar(20),state varchar(20),zip int(10),phoneNUmber bigint(10),email varchar(40));
+Query OK, 0 rows affected, 2 warnings (1.85 sec)
+
+mysql> describe adressbook;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| firstName   | varchar(20) | YES  |     | NULL    |       |
+| lastName    | varchar(20) | YES  |     | NULL    |       |
+| address     | varchar(20) | YES  |     | NULL    |       |
+| city        | varchar(20) | YES  |     | NULL    |       |
+| state       | varchar(20) | YES  |     | NULL    |       |
+| zip         | int         | YES  |     | NULL    |       |
+| phoneNumber | bigint      | YES  |     | NULL    |       |
+| email       | varchar(40) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+//uc3
+mysql>  INSERT INTO adressbook VALUES('Mohammad','Mohsin','Adharshnagar','Metpally','Telangana','505325','9908514276','mdmohsin41439@gmail.com');
+Query OK, 1 row affected (0.08 sec)
+
+mysql>  INSERT INTO adressbook VALUES('Mohammad','Sumer','Sultanpura','Metpally','Telangana','505325','8328455433','mdsumer41439@gmail.com');
+Query OK, 1 row affected (0.12 sec)
+
+mysql>  INSERT INTO adressbook VALUES('Mohammad','Sofyan','Adharshnagar','Korutla','Telangana','505325','8639619379','mdsofyan41439@gmail.com');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> select * from adressbook;
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+
+| firstName | lastName | address      | city     | state     | zip    | phoneNumber | email                   |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+
+| Mohammad  | Mohsin   | Adharshnagar | Metpally | Telangana | 505325 |  9908514276 | mdmohsin41439@gmail.com |
+| Mohammad  | Sumer    | Sultanpura   | Metpally | Telangana | 505325 |  8328455433 | mdsumer41439@gmail.com  |
+| Mohammad  | Sofyan   | Adharshnagar | Korutla  | Telangana | 505325 |  8639619379 | mdsofyan41439@gmail.com |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+
+3 rows in set (0.00 sec)
+
+//uc4
+mysql> update adressbook set firstName ='Abdul' where lastName = 'Sofyan';
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from adressbook;
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+
+| firstName | lastName | address      | city     | state     | zip    | phoneNumber | email                   |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+
+| Mohammad  | Mohsin   | Adharshnagar | Metpally | Telangana | 505325 |  9908514276 | mdmohsin41439@gmail.com |
+| Mohammad  | Sumer    | Sultanpura   | Metpally | Telangana | 505325 |  8328455433 | mdsumer41439@gmail.com  |
+| Abdul     | Sofyan   | Adharshnagar | Korutla  | Telangana | 505325 |  8639619379 | mdsofyan41439@gmail.com |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+
+3 rows in set (0.02 sec)
+
+//uc5
+mysql> delete from adressbook where firstName = 'Abdul';
+Query OK, 1 row affected (0.35 sec)
+
+mysql> select * from adressbook;
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+
+| firstName | lastName | address      | city     | state     | zip    | phoneNumber | email                   |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+
+| Mohammad  | Mohsin   | Adharshnagar | Metpally | Telangana | 505325 |  9908514276 | mdmohsin41439@gmail.com |
+| Mohammad  | Sumer    | Sultanpura   | Metpally | Telangana | 505325 |  8328455433 | mdsumer41439@gmail.com  |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+
+2 rows in set (0.01 sec)
+
+
+//uc6
+mysql> select lastName from adressBook where city = 'Metpally';
++----------+
+| lastName |
++----------+
+| Mohsin   |
+| Sumer    |
++----------+
+2 rows in set (0.00 sec)
+
+mysql> select lastName from adressBook where city = 'Metpally' or state = 'telangana';
++----------+
+| lastName |
++----------+
+| Mohsin   |
+| Sumer    |
++----------+
+2 rows in set (0.00 sec)
+
+//uc7
+mysql> select COUNT(lastName) from adressBook where city = 'Metpally' and state = 'telangana';
++-----------------+
+| COUNT(lastName) |
++-----------------+
+|               2 |
++-----------------+
+1 row in set (0.00 sec)
+
+//uc8
+mysql> select * from adressBook order by lastName;
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+
+| firstName | lastName | address      | city     | state     | zip    | phoneNumber | email                   |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+
+| Mohammad  | Mohsin   | Adharshnagar | Metpally | Telangana | 505325 |  9908514276 | mdmohsin41439@gmail.com |
+| Mohammad  | Sumer    | Sultanpura   | Metpally | Telangana | 505325 |  8328455433 | mdsumer41439@gmail.com  |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+
+2 rows in set (0.00 sec)
+
+//uc9
+mysql> alter table adressbook add family varchar(20);
+Query OK, 0 rows affected (0.69 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table adressbook add friends varchar(20);
+Query OK, 0 rows affected (0.64 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table adressbook add professions varchar(20);
+Query OK, 0 rows affected (1.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from adressBook;
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+--------+---------+-------------+
+| firstName | lastName | address      | city     | state     | zip    | phoneNumber | email                   | family | friends | professions |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+--------+---------+-------------+
+| Mohammad  | Mohsin   | Adharshnagar | Metpally | Telangana | 505325 |  9908514276 | mdmohsin41439@gmail.com | NULL   | NULL    | NULL        |
+| Mohammad  | Sumer    | Sultanpura   | Metpally | Telangana | 505325 |  8328455433 | mdsumer41439@gmail.com  | NULL   | NULL    | NULL        |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+--------+---------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table adressbook add brothers varchar(20);
+Query OK, 0 rows affected (0.72 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from adressBook;
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+--------+---------+-------------+----------+
+| firstName | lastName | address      | city     | state     | zip    | phoneNumber | email                   | family | friends | professions | brothers |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+--------+---------+-------------+----------+
+| Mohammad  | Mohsin   | Adharshnagar | Metpally | Telangana | 505325 |  9908514276 | mdmohsin41439@gmail.com | NULL   | NULL    | NULL        | NULL     |
+| Mohammad  | Sumer    | Sultanpura   | Metpally | Telangana | 505325 |  8328455433 | mdsumer41439@gmail.com  | NULL   | NULL    | NULL        | NULL     |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+--------+---------+-------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> update adressbook set family='Mohsin' where lastName ='Mohsin';
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update adressbook set family='Sumer' where lastName ='Sumer';
+Query OK, 1 row affected (0.23 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from adressBook;
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+--------+---------+-------------+----------+
+| firstName | lastName | address      | city     | state     | zip    | phoneNumber | email                   | family | friends | professions | brothers |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+--------+---------+-------------+----------+
+| Mohammad  | Mohsin   | Adharshnagar | Metpally | Telangana | 505325 |  9908514276 | mdmohsin41439@gmail.com | Mohsin | NULL    | NULL        | NULL     |
+| Mohammad  | Sumer    | Sultanpura   | Metpally | Telangana | 505325 |  8328455433 | mdsumer41439@gmail.com  | Sumer  | NULL    | NULL        | NULL     |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+--------+---------+-------------+----------+
+2 rows in set (0.00 sec)
+
+//uc10
+mysql> select COUNT(family) from adressBook;
++---------------+
+| COUNT(family) |
++---------------+
+|             2 |
++---------------+
+1 row in set (0.00 sec)
+
+//uc11
+
+mysql> update adressbook set brothers='Mohsin' where lastName ='Mohsin';
+Query OK, 1 row affected (0.14 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update adressbook set brothers='Sumer' where lastName ='Sumer';
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from adressBook;
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+--------+---------+-------------+----------+
+| firstName | lastName | address      | city     | state     | zip    | phoneNumber | email                   | family | friends | professions | brothers |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+--------+---------+-------------+----------+
+| Mohammad  | Mohsin   | Adharshnagar | Metpally | Telangana | 505325 |  9908514276 | mdmohsin41439@gmail.com | Mohsin | Mohsin  | NULL        | Mohsin   |
+| Mohammad  | Sumer    | Sultanpura   | Metpally | Telangana | 505325 |  8328455433 | mdsumer41439@gmail.com  | Sumer  | NULL    | NULL        | Sumer    |
++-----------+----------+--------------+----------+-----------+--------+-------------+-------------------------+--------+---------+-------------+----------+
+2 rows in set (0.00 sec)
+
+
+
